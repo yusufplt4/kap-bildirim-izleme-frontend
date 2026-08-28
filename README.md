@@ -73,3 +73,8 @@ export default defineConfig([
 ])
 
 ```
+## İlgili Repository
+
+Backend uygulaması:
+
+https://github.com/yusufplt4/kap-bildirim-izleme-backend
