@@ -1,80 +1,128 @@
-# React + TypeScript + Vite
+# KAP Bildirim İzleme ve Filtreleme Modülü - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+KAP bildirimlerinin görüntülenmesi, takip edilmesi ve kullanıcı tarafından belirlenen kriterlere göre filtrelenmesi amacıyla geliştirilen web arayüzüdür.
 
-Currently, two official plugins are available:
+Frontend, **React + Vite** kullanılarak geliştirilmiş ve Spring Boot tabanlı backend servisiyle REST API üzerinden haberleşmektedir.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Özellikler
 
-## React Compiler
+- Kullanıcı giriş ekranı
+- JWT tabanlı oturum yönetimi
+- USER ve ADMIN rol desteği
+- Güncel KAP bildirimlerinin listelenmesi
+- Yeni bildirim kontrolü
+- Bildirim detaylarına KAP üzerinden doğrudan erişim
+- Şirket bilgilerine doğrudan erişim
+- HİM bildirimlerinin tarih aralığına göre sorgulanması
+- Şirket bazlı filtreleme
+- Bildirim konusu bazlı filtreleme
+- Konsolide / konsolide olmayan bildirim filtreleme
+- Filtre oluşturma, kaydetme, yükleme ve silme
+- Kullanıcı oturum bilgilerinin Zustand ile yönetilmesi
+- Ant Design tabanlı modern ve responsive arayüz
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Kullanılan Teknolojiler
 
-## Expanding the ESLint configuration
+- React
+- Vite
+- JavaScript
+- Ant Design
+- Zustand
+- React Router
+- Fetch API
+- CSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Uygulama Sayfaları
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Login
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Kullanıcıların sisteme giriş yaptığı ekrandır.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Başarılı giriş sonucunda backend tarafından oluşturulan JWT token alınarak kullanıcı oturumu başlatılır.
 
+### KAP Bildirimleri
+
+Güncel KAP bildirimlerinin listelendiği ana ekrandır.
+
+Kullanıcılar:
+
+- Bildirimleri görüntüleyebilir
+- İlgili KAP bildirim sayfasına erişebilir
+- Şirket bilgilerini görüntüleyebilir
+- Yeni gelen bildirimleri takip edebilir
+
+### HİM Filtreleme
+
+KAP bildirimlerinin daha detaylı kriterlere göre filtrelenmesini sağlar.
+
+Filtreleme kriterleri arasında:
+
+- Tarih aralığı
+- Şirket
+- Şirket tipi
+- Bildirim konusu
+- Konsolidasyon durumu
+
+bulunmaktadır.
+
+Oluşturulan filtreler kaydedilerek daha sonra tekrar kullanılabilir.
+
+## Proje Yapısı
+
+```text
+src/
+├── pages/
+│   ├── Login.jsx
+│   ├── Home.jsx
+│   └── Him.jsx
+│
+├── store/
+│   └── authStore.js
+│
+├── assets/
+├── App.jsx
+├── App.css
+├── index.css
+└── main.jsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Backend Bağlantısı
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Frontend uygulaması Spring Boot ile geliştirilen backend servisiyle REST API üzerinden haberleşmektedir.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Geliştirme ortamında backend:
 
+```text
+http://localhost:8080
 ```
-## İlgili Repository
 
-Backend uygulaması:
+adresinde çalışmaktadır.
+
+## Projeyi Çalıştırma
+
+Projeyi klonladıktan sonra bağımlılıkları yükleyin:
+
+```bash
+npm install
+```
+
+Uygulamayı geliştirme modunda başlatın:
+
+```bash
+npm run dev
+```
+
+Vite tarafından oluşturulan geliştirme adresi üzerinden uygulamaya erişebilirsiniz.
+
+## Güvenlik
+
+- JWT token tabanlı authentication kullanılmaktadır.
+- Kullanıcı rolü ve oturum bilgileri Zustand store içerisinde yönetilmektedir.
+- Yetkisiz API istekleri backend tarafında Spring Security tarafından engellenmektedir.
+- KAP Datafeed servislerine frontend üzerinden doğrudan erişim yapılmamaktadır.
+
+## Backend Repository
+
+Projenin Spring Boot backend uygulaması:
 
 https://github.com/yusufplt4/kap-bildirim-izleme-backend
